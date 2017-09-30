@@ -1,7 +1,6 @@
 ## Spotifying College Career Services
 
 ![career services](images/career_svcs_image.png "Career Services")
-
 As students near the end of their college experience, a rite of passage is working with career services to prepare for that first big post-college job.  In the past, the career services experience has been frought with challenges and students may be left navigating an employment search that is poorly defined and fails to provide meaningful career prospects.  
 
 In order to create a better experience for students, and to create a common and standardized platform for colleges, several companies have emerged that provide career services platforms to serve the needs of career services.  One such company is [Purple Briefcase](http://www.purplebriefcase.com/).  Their platform allows students to fill out a profile, explore available jobs, and apply directly through the platform.  Employers have the ability to post jobs that can then get sent out to multiple colleges and universities, making the process simpler for company recruiters while expanding the availability of top candidates.
@@ -35,7 +34,7 @@ This resulted in 63,276 jobs.  Of this original set, there were 5,395 unique app
  
 ### Methods
 
-Look up Inkscape to create process maps and plots.  Need to be able to visualize EDA, methods, and output??
+![Process Workflow](images/job_recommender_workflow.001.png "Process Workflow")
 
 ### Plots
 1. Run logistic regression on factors that predict whether someone will apply for a job
@@ -47,8 +46,10 @@ Look up Inkscape to create process maps and plots.  Need to be able to visualize
 ### Future Work
 
 ### Tools
+![tech stack](images/job_recommender_tech_stack.001.png "Tools Used")
 
 ### References
+[Apan, Preetha. 2016. Algorithms and Architecture for Job Recommendations. O'Reilly Press. https://www.oreilly.com/ideas/algorithms-and-architecture-for-job-recommendations](https://www.oreilly.com/ideas/algorithms-and-architecture-for-job-recommendations)
 
 
 
