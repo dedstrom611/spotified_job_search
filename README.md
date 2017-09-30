@@ -1,8 +1,6 @@
 ## Spotifying College Career Services
 
-![alt text](https://github.com/dedstrom611/recommender_system/images/career_svs_image.png "Career Services")
-
-[logo]: https://github.com/dedstrom611/recommender_system/images/career_svs_image.png "Career Services"
+![career services](images/career_svcs_image.png "Career Services")
 
 As students near the end of their college experience, a rite of passage is working with career services to prepare for that first big post-college job.  In the past, the career services experience has been frought with challenges and students may be left navigating an employment search that is poorly defined and fails to provide meaningful career prospects.  
 
@@ -34,3 +32,24 @@ The data used to create the recommender come from employers who utilize the Purp
 + Practicum
 
 This resulted in 63,276 jobs.  Of this original set, there were 5,395 unique applications.  This created a matrix that was 99.63% sparse.
+ 
+### Methods
+
+Look up Inkscape to create process maps and plots.  Need to be able to visualize EDA, methods, and output??
+
+### Plots
+1. Run logistic regression on factors that predict whether someone will apply for a job
+2. Bar charts of in-state, in-city applications
+3. Map of locations where posted jobs exist. (??)
+
+### Results
+
+### Future Work
+
+### Tools
+
+### References
+
+
+
+ 
