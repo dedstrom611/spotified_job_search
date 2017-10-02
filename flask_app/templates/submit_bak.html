@@ -23,9 +23,8 @@
 
   <link rel="stylesheet" type="text/css" href="../static/style.css">
 
-<!-- {{ url_for('static', filename='submit.css') }} -->
-  <link rel="stylesheet" type="text/css" href="../static/submit.css">
-  <script type="text/javascript" src="../static/submit.js"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='submit.css') }}">
+  <script type="text/javascript" src="{{ url_for('static', filename='submit.js') }}"></script>
 
 
 </head>
@@ -44,13 +43,11 @@
 
   <div class="ui main container grid">
     <div class="six wide column">
-      <h1 class="ui dividing header">Get Recommendations</h1>
+      <h1 class="ui dividing header">Select States</h1>
       <form action="/predict" method='POST' class="ui form">
         <div class="field">
-          <label>Only want to work in certain states?  Choose your states below.</label>
-          <!-- Start filtered dropdown list - This could be used to filter the dropdown based on job category! -->
-          <select id="states" multiple="" name = "states" class="ui fluid dropdown">
-            <option value="">State</option>
+          <label>Want to work somewhere specific?  Let us know!</label>
+          <select id="states" type="text" name="states" class="ui fluid search dropdown" multiple="" placeholder="State">
             <option value="AL">Alabama</option>
             <option value="AK">Alaska</option>
             <option value="AZ">Arizona</option>
@@ -103,13 +100,25 @@
             <option value="WI">Wisconsin</option>
             <option value="WY">Wyoming</option>
           </select>
-          <!-- End filtered dropdown list -->
         </div>
+        <div class="ui error message"><ul class="list"><li>Special Field must have a value</li></ul></div>
+      </form>
+
+    </div>
+  </div>
+    <!-- Start filtered dropdown list - This could be used to filter the dropdown based on job category! -->
+
+    <!-- End filtered dropdown list -->
+
+  <div class="ui main container grid">
+    <div class="eight wide column">
+      <h1 class="ui dividing header">Submit a Job Title</h1>
+      <form action="/predict" method='POST' class="ui form">
         <div class="field">
-          <label>Select a job that interests you. Then, click the Similar Jobs button to get recommendations.</label>
+          <label>Pick a job that looks interesting. We'll help you find similar jobs.</label>
           <select id="job_title" type="text" name="job_title" placeholder="Job Title" class="ui fluid search dropdown">
             {% for jobid, job in full_job_list %}
-            <option value='{{ jobid }}'>{{ job }}</option>
+              <option value='{{ jobid }}'>{{ job }}</option>
             {% endfor %}
           </select>
         </div>

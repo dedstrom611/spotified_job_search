@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 model = JobRecommender()
 
-with open('../data/jobs_similarity_matrix.pkl', 'rb') as m:
+with open('../data/jobs_similarity_matrix2.pkl', 'rb') as m:
     matrix = pickle.load(m)
 
 with open('../data/job_details_dict.pkl', 'rb') as det:
@@ -34,20 +34,20 @@ def submit():
     jobs = list(model.get_full_jobs_list(details_dict))
     return render_template('submit.html', full_job_list=jobs)
 
-
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
-    """Recieve the job from an input form and use the
-    model to classify.
+    """Recieve the list of states and the job from an input form and return
+    job recommendations.
     """
-    states = list(request.form['states'])
+    states = request.form.getlist('states')
     jobid = int(request.form['job_title'])
     jobtitle = str(model.get_job_title(jobid, details_dict))
     ids, titles = model.make_recommendations(jobid, matrix, details_dict, states)
 
     # Get the list of job details for each recommended job.
     details_list = [model.get_job_details(i, details_dict) for i in ids]
-    return render_template('predict.html', job=jobtitle, details=details_list)
+
+    return render_template('predict.html', job=jobtitle, details=details_list, states=states, jobids = ids)
 
 
 if __name__ == '__main__':

@@ -132,7 +132,7 @@ class JobRecommender(object):
         return ids_list[0: k], jobs_list[0: k]
 
     def get_job_details(self, job_id, jobs_dict):
-        '''For a given job title, return the details (description, salary, location and state)
+        '''For a given job ID, return the details (description, salary, location and state)
         from the job details table.
 
         INPUTS:

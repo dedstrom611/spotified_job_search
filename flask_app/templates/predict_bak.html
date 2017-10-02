@@ -30,44 +30,43 @@
 <body>
   <div class="ui fixed  menu">
     <div class="ui container">
-      <a href="/submit" class="header item">
+      <a href="/cover" class="header item">
         <!-- <img class="logo" src="assets/images/logo.png"> -->
         The Purple Briefcase Job Recommender
       </a>
       <a href="/submit" class="item">New Search</a>
 
-      <!-- Sample Dropdown menu in case there are other aspects of your capstone project that fit, otherwise feel free to delete this block out -->
-
-      <div class="ui simple dropdown item">
-        Dropdown <i class="dropdown icon"></i>
-        <div class="menu">
-          <a class="item" href="#">Link Item</a>
-          <a class="item" href="#">Link Item</a>
-          <div class="divider"></div>
-          <div class="header">Header Item</div>
-          <div class="item">
-            <i class="dropdown icon"></i>
-            Sub Menu
-            <div class="menu">
-              <a class="item" href="#">Link Item</a>
-              <a class="item" href="#">Link Item</a>
-            </div>
-          </div>
-          <a class="item" href="#">Link Item</a>
-        </div>
-      </div>
-      <!-- end of sample dropdown -->
     </div>
   </div>
 
   <div class="ui main container grid">
     <div class="sixteen wide column">
 
-      <h1 class="ui dividing header">Jobs Similar to Your Submitted Job:</h1>
+      <h1 class="ui dividing header">Other Jobs That May Interest You</h1>
       <h2 class="ui medium header">
-        Your Job Title
+        Your Selected Job
       </h2>
-      <span>{{ job }}</span>
+      <span>{{ details[0]['jobTitle'] }}</span>
+        <div class="ui sub header">
+        {% if states is not none %}
+        Your Selected states
+          <ul>
+            {% for state in states %}
+              <li>{{ state }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+        {% endif %}
+        </div>
+      <div class="ui sub header">Location</div>
+      <div class="content">
+        {{ details[0]['jobLocation'] + ' ' }}
+        {% if details[0]['jobState'] is not none %}
+          {{ ', ' + details[0]['jobState'] }}
+        {% else %}
+
+        {% endif %}
+      </div>
       <h2 class="ui medium header">
         Similar Jobs
       </h2>
@@ -84,7 +83,7 @@
             <div class="content">
               <h4 class="ui sub header">Description</h4>
                 {{ job_detail['jobDescription'][:140] + '...' }}
-              <h4 class="ui sub header">Required Majors</h4>
+              <!-- <h4 class="ui sub header">Required Majors</h4> -->
             </div>
             <div class="extra content">
               <span class="right floated">
@@ -98,11 +97,33 @@
               </span>
             </div>
 
-
-
-            <div class="ui bottom attached button">
+            <div class="ui bottom attached button" onclick="$('#job_result_modal').modal('show')">
               <i class="info circle icon"></i>
-              <a href="http://www.purplebriefcase.com/">More Details</a>
+              More Details
+            </div>
+          </div>
+
+          <div id="job_result_modal" class="ui modal">
+            <div class="header">{{ job_detail['jobTitle'] }}</div>
+            <div class="content">
+              <div class="description">
+                <div class="ui sub header">Description</div>
+                {{ job_detail['jobDescription'] }}
+                <div class="ui sub header">Location</div>
+                {{ job_detail['jobLocation'] + ' ' }}
+                {% if job_detail['jobState'] is not none %}
+                  {{ ', ' + job_detail['jobState'] + ' '}}
+                {% else %}
+                {%endif %}
+                <div class="ui sub header">Salary</div>
+                {{ job_detail['jobSalary'] }}
+                <div class="ui sub header">Majors</div>
+                {% for major in job_detail['jobMajor'] %}
+                  <a class="ui label">
+                    {{ major }}
+                  </a>
+                {% endfor %}
+              </div>
             </div>
           </div>
         </div>

@@ -25,161 +25,111 @@
   <script type="text/javascript" src="../static/predict.js"></script>
   <link rel="stylesheet" type="text/css" href="../static/predict.css">
 
-
-
-
 </head>
 
 <body>
   <div class="ui fixed  menu">
     <div class="ui container">
-      <a href="#" class="header item">
+      <a href="/cover" class="header item">
         <!-- <img class="logo" src="assets/images/logo.png"> -->
         The Purple Briefcase Job Recommender
       </a>
-      <a href="submit.html" class="item">New Search</a>
+      <a href="/submit" class="item">New Search</a>
 
-      <!-- Sample Dropdown menu in case there are other aspects of your capstone project that fit, otherwise feel free to delete this block out -->
-
-      <div class="ui simple dropdown item">
-        Dropdown <i class="dropdown icon"></i>
-        <div class="menu">
-          <a class="item" href="#">Link Item</a>
-          <a class="item" href="#">Link Item</a>
-          <div class="divider"></div>
-          <div class="header">Header Item</div>
-          <div class="item">
-            <i class="dropdown icon"></i>
-            Sub Menu
-            <div class="menu">
-              <a class="item" href="#">Link Item</a>
-              <a class="item" href="#">Link Item</a>
-            </div>
-          </div>
-          <a class="item" href="#">Link Item</a>
-        </div>
-      </div>
-      <!-- end of sample dropdown -->
     </div>
   </div>
 
   <div class="ui main container grid">
     <div class="sixteen wide column">
 
-      <h1 class="ui dividing header">Jobs Similar to Your Submitted Job:</h1>
+      <h1 class="ui dividing header">Other Jobs That May Interest You</h1>
       <h2 class="ui medium header">
-        Your Job Title
+        Your Selected Job
       </h2>
-      <span>Jr. Web Designer</span>
+      <span>{{ details[0]['jobTitle'] }}</span>
+        <div class="ui sub header">
+        {% if states is not none %}
+        Your Selected states
+          <ul>
+            {% for state in states %}
+              <li>{{ state }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+        {% endif %}
+        </div>
+      <div class="ui sub header">Location</div>
+      <div class="content">
+        {{ details[0]['jobLocation'] + ' ' }}
+        {% if details[0]['jobState'] is not none %}
+          {{ ', ' + details[0]['jobState'] }}
+        {% else %}
+
+        {% endif %}
+      </div>
       <h2 class="ui medium header">
         Similar Jobs
       </h2>
 
-
       <div class="ui divider"></div>
 
-
-
       <div class="ui three column stackable grid">
+        {% for job_detail in details[1:] %}
         <div class="column">
           <div class="ui card">
             <div class="content">
-              <div class="header">Interactive Designer Department of Social Media Experience and Design</div>
+              <div class="header">{{ job_detail['jobTitle'] }}</div>
             </div>
             <div class="content">
               <h4 class="ui sub header">Description</h4>
-              Here is where the description goes
-              <h4 class="ui sub header">Required Majors</h4>
-              Graphic Design, Business
+                {{ job_detail['jobDescription'][:140] + '...' }}
+              <!-- <h4 class="ui sub header">Required Majors</h4> -->
             </div>
             <div class="extra content">
               <span class="right floated">
                 <i class="right floated world icon"></i>
-                Denver, CO
+                {{ job_detail['jobLocation'] + ' ' }}
+                {% if job_detail['jobState'] is not none %}
+                  {{ ', ' + job_detail['jobState'] + ' '}}
+                {% else %}
+
+                {%endif %}
               </span>
             </div>
-            <!-- Begin Button Modal functionality -->
-            <!-- embed flask code into the id(#) reference in the onclick event to the current job's id value, which will correspond to the
-                the job's related modal code block. This onclick event triggers jquery to call the show method on the specified page object
-            -->
-            <div class="ui bottom attached button" onclick="$('#job_result_1_modal').modal('show')">
+
+            <div class="ui bottom attached button" onclick="$('#modal{{job_detail['jobs_id']}}').modal('show')">
               <i class="info circle icon"></i>
               More Details
             </div>
           </div>
-          <!-- The onclick event of the More Details button triggers the modal block below to show.
-          The modal container id is set programmatticaly through the for loop so that we have a unique id to that job's modal view that each button onclick can trigger
-        -->
-        <!-- be sure to set the id of this modal element so it is unique and assigned programmatically in the for loop -->
-          <div id="job_result_1_modal" class="ui modal">
-            <div class="header">Interactive Designer Department of Social Media Experience and Design</div>
+
+          <div id="modal{{job_detail['jobs_id']}}" class="ui modal">
+            <div class="header">{{ job_detail['jobTitle'] }}</div>
             <div class="content">
               <div class="description">
                 <div class="ui sub header">Description</div>
-                Here is where the description goes
-                <div class="ui sub header">Required Majors</div>
-                Here is where the majors goes
+                {{ job_detail['jobDescription'] }}
                 <div class="ui sub header">Location</div>
-                Denver, CO
-                <!-- any other content you want to include in the description goes here -->
+                {{ job_detail['jobLocation'] + ' ' }}
+                {% if job_detail['jobState'] is not none %}
+                  {{ ', ' + job_detail['jobState'] + ' '}}
+                {% else %}
+                {% endif %}
+                <div class="ui sub header">Salary</div>
+                {{ job_detail['jobSalary'] }}
+                <div class="ui sub header">Majors</div>
+                {% if major is not none %}
+                  {% for major in job_detail['jobMajor'].split(',') %}
+                    <a class="ui label">
+                      {{ major }}
+                    </a>
+                  {% endfor %}
+                {% endif %}
               </div>
             </div>
           </div>
-
-          <!-- End Button Modal Functionality -->
-
         </div>
-        <div class="column">
-          <div class="ui card">
-            <div class="content">
-              <div class="header">Interactive Designer Department of Social Media Experience and Design</div>
-            </div>
-            <div class="content">
-              <h4 class="ui sub header">Description</h4>
-              Here is where the description goes
-              <h4 class="ui sub header">Required Majors</h4>
-              Graphic Design, Business
-            </div>
-
-            <div class="extra content">
-
-              <span class="right floated">
-                <i class="right floated world icon"></i>
-                Denver, CO
-              </span>
-            </div>
-            <div class="ui bottom attached button">
-              <i class="info circle icon"></i>
-              More Details
-            </div>
-          </div>
-        </div>
-
-    <div class="column">
-      <div class="ui card">
-        <div class="content">
-          <div class="header">Interactive Designer Department of Social Media Experience and Design</div>
-        </div>
-        <div class="content">
-          <h4 class="ui sub header">Description</h4>
-          Here is where the description goes
-          <h4 class="ui sub header">Required Majors</h4>
-          Graphic Design, Business
-        </div>
-
-        <div class="extra content">
-
-          <span class="right floated">
-            <i class="right floated world icon"></i>
-            Denver, CO
-          </span>
-        </div>
-        <div class="ui bottom attached button">
-          <i class="info circle icon"></i>
-          More Details
-        </div>
-      </div>
-    </div>
+      {% endfor %}
   </div>
 </body>
 </html>
