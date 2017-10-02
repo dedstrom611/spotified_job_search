@@ -9,6 +9,8 @@ In order to create a better experience for students, and to create a common and 
 
 Career services, including those provided by [Purple Briefcase](http://www.purplebriefcase.com/) allow for general job searches based on generic location and key words.  Can the career services search engine be improved by pushing recommended jobs to students based on jobs in which they have expressed interest?
 
+![Home Page](images/recommender_home_page.png "Home Page")
+
 ### How Recommender Engines can improve career services.
 
 Recommender engines exist everywhere these days.  Any scenario that has a set of users and a set of items that can be made available to those users can potentially utilize a recommender engine.  However, career services has a set of use cases and constraints that are different than other recommender use cases:
