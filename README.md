@@ -49,6 +49,10 @@ Suppose Natural Language Processing could be used to determine if jobs can be re
 
 ![Process Workflow](images/job_recommender_workflow.001.png "Process Workflow")
 
+Analytics Workflow Diagram
+
+![Analytics Workflow](images/analytics_workflow.001.png "Analytics Workflow")
+
 ### Plots
 1. Run logistic regression on factors that predict whether someone will apply for a job
 2. Bar charts of in-state, in-city applications
