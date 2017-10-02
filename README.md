@@ -55,14 +55,18 @@ Analytics Workflow Diagram
 
 ![Analytics Workflow](images/analytics_workflow.001.png "Analytics Workflow")
 
-### Plots
-1. Run logistic regression on factors that predict whether someone will apply for a job
-2. Bar charts of in-state, in-city applications
-3. Map of locations where posted jobs exist. (??)
-
-### Results
 
 ### Future Work
+
+Information beyond applications is available, including:
+
+1. Whether or no someone viewed a job.
+2. Whether or not someone marked a job as a favorite.
+3. The number of times someone viewed a job.
+
+A new version of the recommender engine could be developed using an implicit feedback scorecard system.  This may provide more relevant results.
+
+In addition, understanding the differences between job categories and creating tailored recommender engines may be of value.
 
 ### Tools
 ![tech stack](images/job_recommender_tech_stack.001.png "Tools Used")
