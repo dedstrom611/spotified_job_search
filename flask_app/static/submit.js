@@ -7,7 +7,15 @@ $('#job_title')
   .dropdown({
     allowAdditions: true,
     fullTextSearch: true
-  })
+
+ })
+;
+
+$('#states')
+  .dropdown({
+    fullTextSearch: true
+
+ })
 ;
 
 $('.ui.form')
