@@ -19,14 +19,13 @@ from sklearn.metrics.pairwise import cosine_similarity
 from lemmatokenizer import LemmaTokenizer
 
 class JobRecommender(object):
-    ''' Create a jobs recommender based on NLP of three text fields:
-    1. job description
-    2. job title
-    3. job majors (e.g. the list of majors required for a specific job)
+    ''' Use an existing cosine similarity matrix and a dictionary of job details
+    in order to fetch recommended jobs/job details.  The results interact with a
+    flask app in order to allow searching of existing jobs and the return of a set
+    of related, recommended jobs.
 
-    ***** NOTE *****
-    This is a stupid version to start.  Will become more complex once
-    the web app is up and running.
+    ARGUMENTS:
+    None
     '''
 
     def __init__(self):
@@ -74,18 +73,63 @@ class JobRecommender(object):
                     for deets in jobs_dict.values() if str(deets['jobTitle']).strip(punctuation).lstrip()]
         return sorted(titles, key=lambda x: x[1])
 
-    def make_recommendations(self, job_id, cs_sim_matrix, jobs_dict, k=12):
+    def _jobs_in_state_list(self, jobs_list, state_list, jobs_dict):
+        ''' Given a list of job indices, check each job and return a new list containing
+        only jobs that are in the state list.  NOTE: Also return a job if the state is
+        any of ['national', 'Nationwide', 'None', or '--- United States of America ---'].
+
+        If the state list is empty, then return the original jobs list back.
+
+        INPUTS:
+        jobs_list (list) - A list of indices for recommended jobs.  This is the original
+        list that will have non-relevant states removed.
+
+        state_list (list) - A list containing all state abbreviations that the user has
+        selected from the web app e.g. ['GA', 'TX'].  If no states are selected, then
+        state_list = []
+
+        jobs_dict (dictionary) - A dictionary of dictionaries where key is the job index
+        and a dictionary of job details are the values
+        e.g. {3423: {'jobs_id'}: 9023413, {'jobTitle'}: 'Sales Manager', ... }
+
+        RETURNS:
+        A list of the job indices that meet the state criteria.
+        '''
+        if not state_list:
+            return jobs_list
+        else:
+            id_list = []
+            # If job is in a state that is not state specific...
+            for idx in jobs_list:
+                if (not jobs_dict[idx]['jobState']) or \
+                (jobs_dict[idx]['jobState'] == 'national') or \
+                (jobs_dict[idx]['jobState'] == '--- United States of America ---') or \
+                (jobs_dict[idx]['jobState'] == 'Nationwide'):
+                    id_list.append(idx)
+                else:
+                    # If the job has a state or list of states associated with it...
+                    for state in state_list:
+                        if state in jobs_dict[idx]['jobState']:
+                            id_list.append(idx)
+                            break
+            return id_list
+
+    def make_recommendations(self, job_id, cs_sim_matrix, jobs_dict, state_list, k=12):
         '''Sort the cosine similarity matrix from largest to smallest and store
         the results in a list of lists.  The first item will be the job of interest.
         The remaining items will be the top k jobs associated with the job of interest.
+        If the user has selected specific states, perform initial filtering to choose
+        only jobs in those states.
         '''
-        jobs = cs_sim_matrix[self._get_index(job_id, jobs_dict)]
+        jobidx = cs_sim_matrix[self._get_index(job_id, jobs_dict)].argsort()[len(cs_sim_matrix)::-1]
 
-        top_jobs = jobs.argsort()[:-k - 2:-1]
+        top_jobs = np.append(jobidx[0], self._jobs_in_state_list(jobidx[1:], state_list, jobs_dict))
+
+        #top_jobs = jobs.argsort()[:-k - 2:-1]
         ids_list=[jobs_dict[idx]['jobs_id'] for idx in top_jobs]
         jobs_list=[jobs_dict[idx]['jobTitle'] for idx in top_jobs]
 
-        return ids_list, jobs_list
+        return ids_list[0: k], jobs_list[0: k]
 
     def get_job_details(self, job_id, jobs_dict):
         '''For a given job title, return the details (description, salary, location and state)
