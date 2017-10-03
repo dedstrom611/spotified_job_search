@@ -27,6 +27,11 @@ def about():
     """Render the about page if clicked. """
     return render_template('about.html')
 
+@app.route('/contact', methods=['POST', 'GET'])
+def about():
+    """Render the contact page if clicked. """
+    return render_template('contact.html')
+
 @app.route('/submit', methods=['POST', 'GET'])
 def submit():
     """Render a page containing a text input where the user can enter a
