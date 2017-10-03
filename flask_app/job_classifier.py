@@ -73,6 +73,19 @@ class JobRecommender(object):
                     for deets in jobs_dict.values() if str(deets['jobTitle']).strip(punctuation).lstrip()]
         return sorted(titles, key=lambda x: x[1])
 
+    def get_subset_jobs_list(self, state_list, jobs_dict):
+        '''Create a new details dictionary containing only key, value pairs where the job
+        is in state_list. Return a sorted list of tuples that contain job id and job titles
+        use in a searchable dropdown list for the app.'''
+        ids = [k for k in jobs_dict.keys()]
+        newids = self._jobs_in_state_list(ids, state_list, jobs_dict)
+        a = set(ids) - set(newids)
+        new_dict = {k: v for k,v in zip(jobs_dict.keys(),jobs_dict.values())}
+        if a:
+            for idx in a:
+                new_dict.pop(idx, None)
+        return (self.get_full_jobs_list(new_dict))
+
     def _jobs_in_state_list(self, jobs_list, state_list, jobs_dict):
         ''' Given a list of job indices, check each job and return a new list containing
         only jobs that are in the state list.  NOTE: Also return a job if the state is

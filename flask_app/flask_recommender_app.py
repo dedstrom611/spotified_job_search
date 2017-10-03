@@ -28,7 +28,7 @@ def about():
     return render_template('about.html')
 
 @app.route('/contact', methods=['POST', 'GET'])
-def about():
+def contact():
     """Render the contact page if clicked. """
     return render_template('contact.html')
 
@@ -54,6 +54,12 @@ def predict():
 
     return render_template('predict.html', job=jobtitle, details=details_list, states=states, jobids = ids)
 
+@app.route('/get_jobs_in_selected_states/', methods=['GET'])
+def get_jobs_in_selected_states():
+    states = request.args.get('states')
+    data = model.get_subset_jobs_list(states, details_dict)
+    new_dict = {"id": data[0], "title": data[1]}
+    return jsonify(new_dict)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
