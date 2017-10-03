@@ -58,6 +58,9 @@ Analytics Workflow Diagram
 
 ![Analytics Workflow](images/analytics_workflow.001.png "Analytics Workflow")
 
+### Results
+
+![Search Results](images/search_results_example.png "Search Results Sample")
 
 ### Future Work
 
