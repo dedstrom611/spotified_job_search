@@ -9,7 +9,8 @@ In order to create a better experience for students, and to create a common and 
 
 Career services, including those provided by [Purple Briefcase](http://www.purplebriefcase.com/) allow for general job searches based on generic location and key words.  Can the career services search engine be improved by pushing recommended jobs to students based on jobs in which they have expressed interest?
 
-![Home Page](images/recommender_home_page.png "Home Page")
+![Current Search Page](images/pb_jobsearchscreen_current.png "Current Search Page")
+
 
 ### How Recommender Engines can improve career services.
 
@@ -39,6 +40,8 @@ The data used to create the recommender come from employers who utilize the Purp
 This resulted in ~ 29,000 jobs.  Of this original set, there were 5,395 applications.  This created a matrix that was > 99.9% sparse.  As such, traditional recommender methods would not suffice.
 
 ### Proposed Solution
+
+![Home Page](images/recommender_home_page.png "Home Page")
 
 Suppose Natural Language Processing could be used to determine if jobs can be recommended based on their similarity of text entries from:
 
