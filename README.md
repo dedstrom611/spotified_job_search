@@ -26,11 +26,15 @@
 
 As students near the end of their college experience, a rite of passage is working with career services to prepare for that first big post-college job.  In the past, the career services experience has been frought with challenges and students may be left navigating an employment search that is poorly defined and fails to provide meaningful career prospects.  
 
-In order to create a better experience for students, and to create a common and standardized platform for colleges, several companies have emerged that provide career services platforms to serve the needs of career services.  One such company is [Purple Briefcase](http://www.purplebriefcase.com/).  Their platform allows students to fill out a profile, explore available jobs, and apply directly through the platform.  Employers have the ability to post jobs that can then get sent out to multiple colleges and universities, making the process simpler for company recruiters while expanding the availability of top candidates. [Top](#table-of-contents)
+In order to create a better experience for students, and to create a common and standardized platform for colleges, several companies have emerged that provide career services platforms to serve the needs of career services.  One such company is [Purple Briefcase](http://www.purplebriefcase.com/).  Their platform allows students to fill out a profile, explore available jobs, and apply directly through the platform.  Employers have the ability to post jobs that can then get sent out to multiple colleges and universities, making the process simpler for company recruiters while expanding the availability of top candidates. 
+
+[Back to TOC](#table-of-contents)
 
 ### Project Hypothesis
 
-Career services, including those provided by [Purple Briefcase](http://www.purplebriefcase.com/) allow for general job searches based on generic location and key words.  Can the career services search engine be improved by pushing recommended jobs to students based on jobs in which they have expressed interest?
+Career services, including those provided by [Purple Briefcase](http://www.purplebriefcase.com/) allow for general job searches based on generic location and key words.  Can the career services search engine be improved by pushing recommended jobs to students based on jobs in which they have expressed interest? 
+
+[Back to TOC](#table-of-contents)
 
 #### The current Jobs Search Page
 
@@ -47,7 +51,9 @@ Recommender engines exist everywhere these days.  Any scenario that has a set of
 
 + It may only be appropriate to recommend the same job to a limited number of users so as not to bombard the recruiter with an unwieldy number of applicants.
 
-+ Students can set up a profile listing their top choice of city, state and industry.  These may not represent equal weighting amongst students.  In other words, a student could list a specific city as their preference even though they are open to other geographic locations.
++ Students can set up a profile listing their top choice of city, state and industry.  These may not represent equal weighting amongst students.  In other words, a student could list a specific city as their preference even though they are open to other geographic locations. 
+
+[Back to TOC](#table-of-contents)
 
 ### Data
 
@@ -62,7 +68,8 @@ The data used to create the recommender come from employers who utilize the Purp
 + Apprenticeship
 + Practicum
 
-This resulted in ~ 29,000 jobs.  Of this original set, there were 5,395 applications.  This created a matrix that was > 99.9% sparse.  As such, traditional recommender methods would not suffice.
+This resulted in ~ 29,000 jobs.  Of this original set, there were 5,395 applications.  This created a matrix that was > 99.9% sparse.  As such, traditional recommender methods would not suffice. 
+[Back to TOC](#table-of-contents)
 
 ### Methods
 
@@ -72,7 +79,9 @@ A variety of free form text information is available for each posted job. Rather
 2. Submitted job titles
 4. Job categories that are created for each job.
 
-Using this approach, I could also avoid the cold-start problem that arises when users have not yet provided feedback on items.  In this solution, a user can select a job of interest.  The algorithm can then propose similar jobs based on the above methods.
+Using this approach, I could also avoid the cold-start problem that arises when users have not yet provided feedback on items.  In this solution, a user can select a job of interest.  The algorithm can then propose similar jobs based on the above methods. 
+
+[Back to TOC](#table-of-contents)
 
 ![Home Page](images/recommender_home_page.png "Home Page")
 
@@ -80,10 +89,12 @@ Using this approach, I could also avoid the cold-start problem that arises when 
 ### Process Workflow Diagram
 
 ![Process Workflow](images/job_recommender_workflow.001.png "Process Workflow")
+[Back to TOC](#table-of-contents)
 
 ### Analytics Workflow Diagram
 
 ![Analytics Workflow](images/analytics_workflow.png "Analytics Workflow")
+[Back to TOC](#table-of-contents)
 
 ### Results
 
@@ -94,6 +105,7 @@ After performing TF-IDF vectorization, I used non-negative matrix factorization 
 ##### Sample recommended search results
 
 ![Search Results](images/search_results_example.png "Search Results Sample")
+[Back to TOC](#table-of-contents)
 
 ### Future Work
 
@@ -105,16 +117,21 @@ Information beyond applications is available, including:
 
 A new version of the recommender engine could be developed using an implicit feedback scorecard system.  This may provide more relevant results.
 
-In addition, understanding the differences between job categories and creating tailored recommender engines for each category may be of value.
+In addition, understanding the differences between job categories and creating tailored recommender engines for each category may be of value. 
+
+[Back to TOC](#table-of-contents)
 
 ### Technology Stack
 ![tech stack](images/job_recommender_techstack.png "Tools Used")
+[Back to TOC](#table-of-contents)
 
 ### References
 1. [Apan, Preetha. 2016. Algorithms and Architecture for Job Recommendations. O'Reilly Press. https://www.oreilly.com/ideas/algorithms-and-architecture-for-job-recommendations](https://www.oreilly.com/ideas/algorithms-and-architecture-for-job-recommendations)
 2. [Lescovek, Jule, Rajaraman, Anand, and Ullman, Jeffrey D. 2014. Mining of Massive Datasets, chapter 9](http://infolab.stanford.edu/~ullman/mmds/ch9.pdf)
 3. Harrington, Peter. 2012. Machine Learning in Action, chapter 14
 4. [Yeung, Albert Au. 2010. Matrix Factorization: A Simple Tutorial and Implementation in Python [blog post]. Retrieved from Matrix Factorization: A Simple Tutorial and Implementation in Python](http://www.quuxlabs.com/blog/2010/09/matrix-factorization-a-simple-tutorial-and-implementation-in-python/)
+
+[Back to TOC](#table-of-contents)
 
 ### Acknowledgements
 
@@ -123,6 +140,8 @@ In addition, understanding the differences between job categories and creating t
 + Ruffalo Noel Levitz senior leadership, for allowing me the opportunity to take part in this immersive program.
 + Brian Kasen, for help with all things HTML and JavaScript.
 + My wife Sarah, daughter Nell, and son Emery, for patience, support and endless understanding of what it is like to chase after something challenging and exciting.
+
+[Back to TOC](#table-of-contents)
 
 
 
