@@ -9,6 +9,8 @@ In order to create a better experience for students, and to create a common and 
 
 Career services, including those provided by [Purple Briefcase](http://www.purplebriefcase.com/) allow for general job searches based on generic location and key words.  Can the career services search engine be improved by pushing recommended jobs to students based on jobs in which they have expressed interest?
 
+##### The current Jobs Search Page
+
 ![Current Search Page](images/pb_jobsearchscreen_current.png "Current Search Page")
 
 
@@ -43,7 +45,7 @@ This resulted in ~ 29,000 jobs.  Of this original set, there were 5,395 applicat
 
 ![Home Page](images/recommender_home_page.png "Home Page")
 
-Suppose Natural Language Processing could be used to determine if jobs can be recommended based on their similarity of text entries from:
+A depth of free form text information is available for each posted job. Suppose Natural Language Processing could be used to determine if jobs can be recommended based on their similarity of text entries from:
 
 1. Submitted job descriptions
 2. Submitted job titles
@@ -56,7 +58,7 @@ Suppose Natural Language Processing could be used to determine if jobs can be re
 
 Analytics Workflow Diagram
 
-![Analytics Workflow](images/analytics_workflow.001.png "Analytics Workflow")
+![Analytics Workflow](images/analytics_workflow.png "Analytics Workflow")
 
 ### Results
 
