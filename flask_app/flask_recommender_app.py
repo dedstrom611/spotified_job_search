@@ -25,8 +25,14 @@ with open('../data/jobs_similarity_matrix2.pkl', 'rb') as m:
 with open('../data/job_details_dict.pkl', 'rb') as det:
     details_dict = pickle.load(det)
 
-with open('../data/descrip_nmf_matrix.pkl', 'rb') as f:
-    W = pickle.load(f)
+with open('../data/descrip_nmf_matrix.pkl', 'rb') as dsc:
+    Wd = pickle.load(dsc)
+
+with open('../data/category_nmf_matrix.pkl', 'rb') as cat:
+    Wc = pickle.load(cat)
+
+with open('../data/title_nmf_matrix.pkl', 'rb') as ttl:
+    Wt = pickle.load(ttl)
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -75,12 +81,26 @@ def get_jobs_in_selected_states():
 
 @app.route('/3dplot_template', methods=['POST','GET'])
 def plot_template():
-    x = list(W[:,1].flatten())
-    y = list(W[:,9].flatten())
-    z = list(W[:,6].flatten())
-    c = list(np.argmax(W, axis=1))
+    xd = list(Wd[:,0].flatten())
+    yd = list(Wd[:,6].flatten())
+    zd = list(Wd[:,9].flatten())
+    cd = list(np.argmax(Wd, axis=1))
 
-    return render_template('3dplot_template.html', x=json.dumps(x), y=json.dumps(y), z=json.dumps(z), c=c)
+    # xc = list(Wc[:,0].flatten())
+    # yc = list(Wc[:,1].flatten())
+    # zc = list(Wc[:,8].flatten())
+    # cc = list(np.argmax(Wc, axis=1))
+    #
+    # xt = list(Wt[:,5].flatten())
+    # yt = list(Wt[:,6].flatten())
+    # zt = list(Wt[:,9].flatten())
+    # ct = list(np.argmax(Wt, axis=1))
+
+    return render_template('3dplot_template.html',\
+    x1=json.dumps(xd), y1=json.dumps(yd), z1=json.dumps(zd), c1=cd)
+    # x2=json.dumps(xd), y2=json.dumps(yd), z2=json.dumps(zd), c2=cd,\
+    # x3=json.dumps(xd), y3=json.dumps(yd), z3=json.dumps(zd), c3=cd\
+    # )
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

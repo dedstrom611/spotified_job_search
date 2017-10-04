@@ -62,6 +62,12 @@ Analytics Workflow Diagram
 
 ### Results
 
+Below is a plot of the three largest cluster differences for job **descriptions** from the NMF clustering:
+
+![Scatter Plot](images/descriptions_nmf_cluster.png "Job Description Clusters")
+
+##### Sample recommended search results
+
 ![Search Results](images/search_results_example.png "Search Results Sample")
 
 ### Future Work
