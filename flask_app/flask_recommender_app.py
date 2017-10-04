@@ -6,7 +6,6 @@ import numpy as np
 import plotly
 import plotly.plotly as py
 import plotly.graph_objs as go
-#The line below will let you run this offline.
 from plotly.offline import download_plotlyjs,plot, iplot
 import pickle
 
@@ -29,15 +28,15 @@ with open('../data/job_details_dict.pkl', 'rb') as det:
 with open('../data/descrip_nmf_matrix.pkl', 'rb') as dsc:
     Wd = pickle.load(dsc)
 
-with open('../data/category_nmf_matrix.pkl', 'rb') as cat:
-    Wc = pickle.load(cat)
-
-with open('../data/title_nmf_matrix.pkl', 'rb') as ttl:
-    Wt = pickle.load(ttl)
+# with open('../data/category_nmf_matrix.pkl', 'rb') as cat:
+#     Wc = pickle.load(cat)
+#
+# with open('../data/title_nmf_matrix.pkl', 'rb') as ttl:
+#     Wt = pickle.load(ttl)
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    """Render a simple splash page."""
+    """Render the recommender home page."""
     return render_template('cover.html')
 
 @app.route('/about', methods=['POST', 'GET'])
@@ -53,7 +52,8 @@ def contact():
 @app.route('/submit', methods=['POST', 'GET'])
 def submit():
     """Render a page containing a text input where the user can enter a
-    job for which to find recommendations.  """
+    job for which to find recommendations.
+    """
     jobs = list(model.get_full_jobs_list(details_dict))
     return render_template('submit.html', full_job_list=jobs)
 
@@ -61,6 +61,7 @@ def submit():
 def predict():
     """Recieve the list of states and the job from an input form and return
     job recommendations.
+    deprecated due to get_jobs_in_selected_states method.
     """
     states = request.form.getlist('states')
     jobid = int(request.form['job_title'])
@@ -70,10 +71,14 @@ def predict():
     # Get the list of job details for each recommended job.
     details_list = [model.get_job_details(i, details_dict) for i in ids]
 
-    return render_template('predict.html', job=jobtitle, details=details_list, states=states, jobids = ids)
+    return render_template('predict.html', job=jobtitle, details=details_list, states=states, jobids=ids)
 
 @app.route('/get_jobs_in_selected_states', methods=['POST','GET'])
 def get_jobs_in_selected_states():
+    '''Receive a list of states (or None) and a job title.
+    Return a JSON object containing job ID and job titles to populate
+    the job titles dropdown list.
+    '''
     states = request.args.get("states")
     new_list = model.get_subset_jobs_list(states, details_dict)
     data = [{"id": i[0], "title": i[1]} for i in new_list]
@@ -82,6 +87,8 @@ def get_jobs_in_selected_states():
 
 @app.route('/3dplot_template', methods=['POST','GET'])
 def plot_template():
+    '''Create a 3-d interactive plot of most non-negative NMF clusters
+    '''
     xd = list(Wd[:,0].flatten())
     yd = list(Wd[:,6].flatten())
     zd = list(Wd[:,9].flatten())
