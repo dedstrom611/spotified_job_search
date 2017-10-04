@@ -60,6 +60,9 @@ class JobRecommender(object):
         return key
 
     def get_job_title(self, jobid, jobs_dict):
+        ''' deprecated code used to get a job title
+        from the jobs dictionary using the job id.
+        '''
         for v in jobs_dict.values():
             if v['jobs_id'] == jobid:
                 title = v['jobTitle']
@@ -68,15 +71,38 @@ class JobRecommender(object):
 
     def get_full_jobs_list(self, jobs_dict):
         '''Return a sorted list of tuples that contain job titles and job id for
-        use in a searchable dropdown list for the app.'''
-        titles = [(deets['jobs_id'], str(deets['jobTitle']).strip(punctuation).lstrip())\
-                    for deets in jobs_dict.values() if str(deets['jobTitle']).strip(punctuation).lstrip()]
+        use in a searchable dropdown list for the web app.
+
+        INPUTS:
+        jobs_dict (dict) - A dictionary with index as the keys and a dictionary of
+        job details as the values e.g. {12345: {'jobs_id': 93202, 'jobTitle': 'Dog Groomer', ...}}
+
+        RETURNS:
+        titles (list) - A list of tuples containing the job ID and job title,
+        sorted by ascending job title e.g. [(93202, 'Dog Groomer'), (34298, 'Dog Walker')]
+        '''
+        # titles = [(deets['jobs_id'], str(deets['jobTitle']).strip(punctuation).lstrip())\
+        #             for deets in jobs_dict.values() if str(deets['jobTitle']).strip(punctuation).lstrip()]
+        titles = [(d['jobs_id'],\
+                  str(d['jobTitle']).strip(punctuation).lstrip() + ' (' + d['jobLocation'] + ')')\
+                  for d in jobs_dict.values() if str(d['jobTitle']).strip(punctuation).lstrip()]
         return sorted(titles, key=lambda x: x[1])
 
     def get_subset_jobs_list(self, state_list, jobs_dict):
         '''Create a new details dictionary containing only key, value pairs where the job
         is in state_list. Return a sorted list of tuples that contain job id and job titles
-        use in a searchable dropdown list for the app.'''
+        use in a searchable dropdown list for the app.
+
+        INPUTS:
+        state_list (list) - A list of state abbreviations used to filter the jobs list e.g. ['AL', 'CO']
+
+        jobs_dict (dict) - A dictionary with index as the keys and a dictionary of
+        job details as the values e.g. {12345: {'jobs_id': 93202, 'jobTitle': 'Dog Groomer', ...}}
+
+        RETURNS:
+        titles (list) - A list of tuples containing the job ID and job title,
+        sorted by ascending job title e.g. [(93202, 'Dog Groomer'), (34298, 'Dog Walker')]
+        '''
         ids = [k for k in jobs_dict.keys()]
         newids = self._jobs_in_state_list(ids, state_list, jobs_dict)
         a = set(ids) - set(newids)
@@ -84,7 +110,8 @@ class JobRecommender(object):
         if a:
             for idx in a:
                 new_dict.pop(idx, None)
-        return (self.get_full_jobs_list(new_dict))
+        job_tuple = self.get_full_jobs_list(new_dict)
+        return (job_tuple)
 
     def _jobs_in_state_list(self, jobs_list, state_list, jobs_dict):
         ''' Given a list of job indices, check each job and return a new list containing
@@ -133,6 +160,21 @@ class JobRecommender(object):
         The remaining items will be the top k jobs associated with the job of interest.
         If the user has selected specific states, perform initial filtering to choose
         only jobs in those states.
+
+        INPUTS:
+        job_id (int) - The job ID for which to find similar jobs.
+
+        cs_sim_matrix (NxN Numpy array) - The matrix of cosine similarities used to find
+        recommended jobs.
+
+        jobs_dict (dictionary) - A dictionary of dictionaries where key is the job index
+        and a dictionary of job details are the values
+        e.g. {3423: {'jobs_id'}: 9023413, {'jobTitle'}: 'Sales Manager', ... }
+
+        state_list (list) - A list of state abbreviations used to filter recommendations
+        or None if all states should be considered.
+
+        k (int) - The number of recommended jobs to return.  Default is 12 jobs.
         '''
         jobidx = cs_sim_matrix[self._get_index(job_id, jobs_dict)].argsort()[len(cs_sim_matrix)::-1]
 
