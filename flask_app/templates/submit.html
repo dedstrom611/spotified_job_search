@@ -23,21 +23,60 @@
 
   <link rel="stylesheet" type="text/css" href="../static/style.css">
 
-<!-- {{ url_for('static', filename='submit.css') }} -->
+  <!-- {{ url_for('static', filename='submit.css') }} -->
   <link rel="stylesheet" type="text/css" href="../static/submit.css">
   <script type="text/javascript" src="../static/submit.js"></script>
 
-
 </head>
+
+<script charset="utf-8" type="text/javascript">
+$(function() {
+  var dropdown = {
+    states: $('#states'),
+    job_titles: $('#job_titles')
+  };
+
+  // function to call XHR and update goodsrec dropdown
+  function UpdateJobTitles() {
+    var states = dropdown.states.val();
+    dropdown.job_titles.attr('disabled', 'disabled');
+    console.log(states);
+
+    // if (states.length) {
+      dropdown.job_titles.empty();
+      $.getJSON("{{ url_for('get_jobs_in_selected_states') }}", {states: states}, function(data) {
+        console.log(data);
+        data.forEach(function(item) {
+          dropdown.job_titles.append(
+            $('<option>', {
+              // style: df['colors'].iloc[item.id]
+              // class: item.color,
+              value: item.id,
+              text: item.name
+            })
+          );
+        });
+        dropdown.job_titles.removeAttr('disabled');
+      });
+}
+UpdateJobTitles();
+
+// event listener to customer dropdown change
+dropdown.states.on('change', function() {
+  UpdateJobTitles();
+});
+
+});
+</script>
 
 <body>
   <div class="ui fixed  menu">
     <div class="ui container">
-      <a href="#" class="header item">
+      <a href="/" class="header item">
         <!-- <img class="logo" src="assets/images/logo.png"> -->
         The Purple Briefcase Job Recommender
       </a>
-      <a href="#" class="item">New Search</a>
+      <a href="/submit" class="item">New Search</a>
 
     </div>
   </div>
@@ -49,7 +88,7 @@
         <div class="field">
           <label>Only want to work in certain states?  Choose your states below.</label>
           <!-- Start filtered dropdown list - This could be used to filter the dropdown based on job category! -->
-          <select id="states" multiple="" name = "states" class="ui fluid dropdown">
+          <select id="states" multiple="" name="states" class="ui fluid dropdown">
             <option value="">State</option>
             <option value="AL">Alabama</option>
             <option value="AK">Alaska</option>
@@ -108,11 +147,13 @@
         <div class="field">
           <label>Select a job that interests you. Then, click the Similar Jobs button to get recommendations.</label>
           <select id="job_title" type="text" name="job_title" placeholder="Job Title" class="ui fluid search dropdown">
-            {% for jobid, job in full_job_list %}
+            <!-- {% for jobid, job in full_job_list %}
             <option value='{{ jobid }}'>{{ job }}</option>
-            {% endfor %}
+            {% endfor %} -->
           </select>
         </div>
+
+
 
         <button class="ui primary button" type="submit">Similar Jobs</button>
         <div class="ui error message"><ul class="list"><li>Special Field must have a value</li></ul></div>
