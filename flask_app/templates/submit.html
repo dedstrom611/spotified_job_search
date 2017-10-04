@@ -32,39 +32,52 @@
 <script charset="utf-8" type="text/javascript">
 $(function() {
   var dropdown = {
-    states: $('#states'),
-    job_titles: $('#job_titles')
+    states: $('#select_states'),
+    job_title: $('#select_title')
   };
 
+  function getSelectValues(select) {
+    var result = [];
+    var options = select && select.options;
+    var opt;
+
+    for (var i=0, iLen=options.length; i<iLen; i++) {
+      opt = options[i];
+
+      if (opt.selected) {
+        result.push(opt.value || opt.text);
+      }
+    }
+    return result;
+  }
   // function to call XHR and update goodsrec dropdown
   function UpdateJobTitles() {
     var states = dropdown.states.val();
-    dropdown.job_titles.attr('disabled', 'disabled');
+    dropdown.job_title.attr('disabled', 'disabled');
     console.log(states);
-
     // if (states.length) {
-      dropdown.job_titles.empty();
-      $.getJSON("{{ url_for('get_jobs_in_selected_states') }}", {states: states}, function(data) {
-        console.log(data);
-        data.forEach(function(item) {
-          dropdown.job_titles.append(
-            $('<option>', {
-              // style: df['colors'].iloc[item.id]
-              // class: item.color,
-              value: item.id,
-              text: item.name
-            })
-          );
-        });
-        dropdown.job_titles.removeAttr('disabled');
+    dropdown.job_title.empty();
+    $.getJSON("{{ url_for('get_jobs_in_selected_states') }}", {states: states.join()}, function(data) {
+      console.log(data);
+      data.forEach(function(item) {
+        dropdown.job_title.append(
+          $('<option>', {
+            // style: df['colors'].iloc[item.id]
+            // class: item.color,
+            value: item.id,
+            text: item.title
+          })
+        );
       });
-}
-UpdateJobTitles();
-
-// event listener to customer dropdown change
-dropdown.states.on('change', function() {
+      dropdown.job_title.removeAttr('disabled');
+    });
+  }
   UpdateJobTitles();
-});
+
+  // event listener to customer dropdown change
+  dropdown.states.on('change', function() {
+    UpdateJobTitles();
+  });
 
 });
 </script>
@@ -81,14 +94,17 @@ dropdown.states.on('change', function() {
     </div>
   </div>
 
-  <div class="ui main container grid">
-    <div class="six wide column">
+  <div class="ui main container one column grid">
+
+    <div class="row">
       <h1 class="ui dividing header">Get Recommendations</h1>
-      <form action="/predict" method='POST' class="ui form">
-        <div class="field">
+    </div>
+    <form action="/predict" method='POST' class="ui form">
+      <div class="row">
+        <div class="field six wide column">
           <label>Only want to work in certain states?  Choose your states below.</label>
           <!-- Start filtered dropdown list - This could be used to filter the dropdown based on job category! -->
-          <select id="states" multiple="" name="states" class="ui fluid dropdown">
+          <select id="select_states" multiple="" name="states" class="ui fluid dropdown">
             <option value="">State</option>
             <option value="AL">Alabama</option>
             <option value="AK">Alaska</option>
@@ -144,22 +160,26 @@ dropdown.states.on('change', function() {
           </select>
           <!-- End filtered dropdown list -->
         </div>
-        <div class="field">
+      </div>
+
+      <br/>
+      <div class="row">
+
+        <div class="field ten wide column">
           <label>Select a job that interests you. Then, click the Similar Jobs button to get recommendations.</label>
-          <select id="job_title" type="text" name="job_title" placeholder="Job Title" class="ui fluid search dropdown">
+          <select id="select_title" type="text" name="job_title" placeholder="Job Title" class="ui fluid search dropdown">
             <!-- {% for jobid, job in full_job_list %}
             <option value='{{ jobid }}'>{{ job }}</option>
             {% endfor %} -->
           </select>
         </div>
+      </div>
 
+      <br/>
+      <button class="ui primary button" type="submit">Similar Jobs</button>
+      <div class="ui error message"><ul class="list"><li>Special Field must have a value</li></ul></div>
+    </form>
 
-
-        <button class="ui primary button" type="submit">Similar Jobs</button>
-        <div class="ui error message"><ul class="list"><li>Special Field must have a value</li></ul></div>
-      </form>
-
-    </div>
   </div>
 </body>
 </html>

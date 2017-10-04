@@ -11,6 +11,7 @@ from plotly.offline import download_plotlyjs,plot, iplot
 import pickle
 
 from job_classifier import JobRecommender
+# import ipdb; ipdb.set_trace()
 
 app = Flask(__name__)
 
@@ -73,11 +74,11 @@ def predict():
 
 @app.route('/get_jobs_in_selected_states', methods=['POST','GET'])
 def get_jobs_in_selected_states():
-    states = request.args.get('states')
-    data = model.get_subset_jobs_list(states, details_dict)
-    new_dict = {"id": data[0], "title": data[1]}
-    return render_template('get_jobs_in_selected_states.html', test=new_dict, states=states)
-    # return jsonify(new_dict)
+    states = request.args.get("states")
+    new_list = model.get_subset_jobs_list(states, details_dict)
+    data = [{"id": i[0], "title": i[1]} for i in new_list]
+    # return render_template('get_jobs_in_selected_states.html', states=states)
+    return jsonify(data)
 
 @app.route('/3dplot_template', methods=['POST','GET'])
 def plot_template():

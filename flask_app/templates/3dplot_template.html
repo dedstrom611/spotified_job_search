@@ -38,22 +38,26 @@
   </div>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-<div id="8bfe1481-6eea-4403-b309-9aabc38ec614" style="height: 100%; width: 100%;" class="plotly-graph-div"></div>
-  <script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("8bfe1481-6eea-4403-b309-9aabc38ec614",
-  [{"type":
-    "scatter3d",
-    "x": {{ x1|safe }},
-    "y": {{ y1|safe }},
-    "z": {{ z1|safe }},
-    "mode": "markers",
-    "marker":
-      {"size": 5, "color": {{ c1|safe }},
-      "colorscale": "Portland",
-      "opacity": 0.5}}],
-      {"margin": {"l": 0, "r": 0, "b": 0, "t": 0}},
-      {"showLink": false, "linkText": "Export to plot.ly"})
-  </script>
+<div class="ui main container grid">
+    <div class="sixteen wide column">
+  <div class="ui sizer vertical segment">
+    <div class="ui medium header">3-D Plot of Top NMF Clusters - Job Description</div>
+    <p><div id="8bfe1481-6eea-4403-b309-9aabc38ec614" style="height: 100%; width: 100%;" class="plotly-graph-div"></div>
+      <script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("8bfe1481-6eea-4403-b309-9aabc38ec614",
+      [{"type":
+        "scatter3d",
+        "x": {{ x1|safe }},
+        "y": {{ y1|safe }},
+        "z": {{ z1|safe }},
+        "mode": "markers",
+        "marker":
+          {"size": 5, "color": {{ c1|safe }},
+          "colorscale": "Portland",
+          "opacity": 0.5}}],
+          {"margin": {"l": 0, "r": 0, "b": 0, "t": 0}},
+          {"showLink": false, "linkText": "Export to plot.ly"})
+      </script></p>
+  </div>
 
   <!-- <div id="8bfe1481-6eea-4403-b309-9aabc38ec614" style="height: 100%; width: 100%;" class="plotly-graph-div"></div>
     <script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("8bfe1481-6eea-4403-b309-9aabc38ec614",
@@ -86,6 +90,7 @@
           {"margin": {"l": 0, "r": 0, "b": 0, "t": 0}},
           {"showLink": false, "linkText": "Export to plot.ly"})
       </script> -->
-
+</div>
+</div>
 </body>
 </html>
