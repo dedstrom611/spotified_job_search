@@ -3,7 +3,7 @@
 $(document)
 .ready(function() {
 
-$('#job_title')
+$('#select_title')
   .dropdown({
     allowAdditions: true,
     fullTextSearch: true
@@ -11,7 +11,7 @@ $('#job_title')
  })
 ;
 
-$('#states')
+$('#select_states')
   .dropdown({
     fullTextSearch: true
 
